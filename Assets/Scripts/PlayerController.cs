@@ -19,18 +19,29 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        var axis = GetAxis();
+
+        Move(axis);
+        Animate(axis);
+    }
+
+    private Vector3 GetAxis()
+    {
         var horizontalAxis = Input.GetAxisRaw(_horizontalAxis);
-        var verticallAxis = Input.GetAxisRaw(_verticallAxis);
+        var verticalAxis = Input.GetAxisRaw(_verticallAxis);
 
+        return new Vector3(horizontalAxis, verticalAxis);
+    }
 
-        var isWalk = horizontalAxis != 0 || verticallAxis != 0;
+    private void Move(Vector3 axis) 
+    {
+        _rb.MovePosition(transform.position + axis * (Time.deltaTime * _speed));
+    }
 
-        _animator.SetBool(AnimatorKeys.IsWalk, isWalk);
-
-        Vector3 _inputVector = new Vector3(horizontalAxis, verticallAxis, 0);
-
-        _rb.MovePosition(transform.position + _inputVector * Time.deltaTime * _speed);
-
+    
+    private void Animate(Vector3 axis) 
+    {
+        _animator.SetBool(AnimatorKeys.IsWalk, !axis.Equals(Vector3.zero));
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -38,5 +49,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    private void Test()
+    {
+        Debug.Log("DEATH EVENT");
+    }
 }
