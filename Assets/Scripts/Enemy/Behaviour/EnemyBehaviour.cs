@@ -13,8 +13,9 @@ namespace Assets.Scripts.Enemy
 
         public virtual void Enter()
         {
-            Debug.Log(GetType());
+           // Debug.Log(GetType());
         }
+
         //аналог Update в MonoBehaviour
         public abstract void Tick();
 

@@ -2,19 +2,20 @@
 
 namespace Assets.Scripts.Enemy
 {
+
     public class ChaseBehaviour : EnemyBehaviour
     {
         private readonly EnemyBehaviourController _enemyBehaviourController;
         private readonly PlayerTrigger _chaseTrigger;
         private readonly PlayerTrigger _attackTrigger;
-        private readonly Enemy _enemy;
+        private readonly EnemyController _enemyController;
 
-        public ChaseBehaviour(EnemyBehaviourController enemyBehaviourController, PlayerTrigger chaseTrigger, PlayerTrigger attackTrigger, Enemy enemy) : base(enemyBehaviourController)
+        public ChaseBehaviour(EnemyBehaviourController enemyBehaviourController, PlayerTrigger chaseTrigger, PlayerTrigger attackTrigger, EnemyController enemyController) : base(enemyBehaviourController)
         {
             _enemyBehaviourController = enemyBehaviourController;
             _chaseTrigger = chaseTrigger;
             _attackTrigger = attackTrigger;
-            _enemy = enemy;
+            _enemyController = enemyController;
         }
 
         public override void Tick()
@@ -22,24 +23,33 @@ namespace Assets.Scripts.Enemy
             if (_attackTrigger.IsTriggered)
             {
                 _enemyBehaviourController.SwitchBehaviour<AttackBehaviour>();
-                Debug.Log("_attackTrigger.IsTriggered");
+                Debug.Log("ATTACK MODE");
             }
             else if (_chaseTrigger.IsTriggered)
             {
-                Debug.Log("_chaseTrigger.IsTriggered");
-                _enemy.Move(_chaseTrigger.TriggeredValue.transform.position);
+                Debug.Log("CHASE MODE");
+                _enemyController.Rigidbody2DMovement.MoveByDirectionToPoint(_chaseTrigger.TriggeredValue.transform.position);
             }
-            else 
+            else
             {
-                _enemyBehaviourController.SwitchBehaviour<InactionBehaviour>();
-                Debug.Log("patrolling");
+                _enemyBehaviourController.SwitchBehaviour<PatrollingBehaviour>();
+                Debug.Log("PATROLLING MODE");
             }
         }
 
         public override void Exit()
         {
-            _enemy.Stop();
+            _enemyController.Rigidbody2DMovement.Stop();
         }
-    }
 
+        ///???
+#if UNITY_EDITOR
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawLine(_enemyController.transform.position, _chaseTrigger.TriggeredValue.transform.position);
+            Debug.Log("Gizmos!");
+        }
+#endif
+    }
 }

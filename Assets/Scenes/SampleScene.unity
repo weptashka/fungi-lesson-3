@@ -408,8 +408,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 663323232}
-  - component: {fileID: 663323233}
   - component: {fileID: 663323234}
+  - component: {fileID: 663323235}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -425,7 +425,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663323229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.22, y: -0.394, z: -0.019076275}
+  m_LocalPosition: {x: -3.86, y: 2.97, z: -0.019076275}
   m_LocalScale: {x: 0.30000004, y: 0.30000004, z: 0.30000004}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -436,24 +436,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &663323233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 663323229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef4cf8945b0ed55429e369026346ba8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _chaseTrigger: {fileID: 908563389}
-  _attackTrigger: {fileID: 1380685906}
-  _enemyAnimationController: {fileID: 1173471521}
-  _rb: {fileID: 663323234}
-  _speed: 2
-  _attackDelay: 5
 --- !u!50 &663323234
 Rigidbody2D:
   serializedVersion: 4
@@ -475,6 +457,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &663323235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663323229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c48b574e00018641a3bc2f87742cef4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chaseTrigger: {fileID: 908563389}
+  _attackTrigger: {fileID: 1380685906}
+  _attackRadius: 3.92
+  _chaseRadius: 13.2
+  _enemyAnimationController: {fileID: 0}
+  _rb: {fileID: 663323234}
+  _speed: 2
+  _movementPoints:
+  - {x: -6.23, y: 3.99, z: -0.019076275}
+  - {x: -6.3, y: -1.44, z: -0.019076275}
+  - {x: -2.54, y: -0.5, z: -0.019076275}
+  - {x: -0.42, y: 3.99, z: -0.019076275}
+  _attackDelay: 5.49
+  _damage: 2
 --- !u!1 &908563386
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,7 +531,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.33454418, y: -3.579661}
   serializedVersion: 2
-  m_Radius: 13.781537
+  m_Radius: 13.2
 --- !u!114 &908563389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -629,7 +637,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: -0.12370902, y: -4.190664}
   serializedVersion: 2
-  m_Radius: 3.63
+  m_Radius: 3.92
 --- !u!114 &1380685906
 MonoBehaviour:
   m_ObjectHideFlags: 0

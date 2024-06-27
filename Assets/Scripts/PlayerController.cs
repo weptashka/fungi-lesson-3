@@ -1,3 +1,4 @@
+using Assets.Scripts.Enemy;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -16,6 +17,13 @@ public class PlayerController : MonoBehaviour
 
     private string _horizontalAxis = "Horizontal";
     private string _verticallAxis = "Vertical";
+
+    private LifeHandler _lifeHandler;
+
+    private void Awake()
+    {
+        _lifeHandler = new LifeHandler(20);
+    }
 
     private void Update()
     {

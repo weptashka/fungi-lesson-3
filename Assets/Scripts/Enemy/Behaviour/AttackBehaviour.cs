@@ -3,19 +3,19 @@
     public class AttackBehaviour : EnemyBehaviour
     {
         private readonly PlayerTrigger _attackTrigger;
-        private readonly Enemy _enemy;
+        private readonly EnemyController _enemyController;
 
-        public AttackBehaviour(EnemyBehaviourController enemyBehaviourController, PlayerTrigger attackTrigger, Enemy enemy) : base(enemyBehaviourController)
+        public AttackBehaviour(EnemyBehaviourController enemyBehaviourController, PlayerTrigger attackTrigger, EnemyController enemyController) : base(enemyBehaviourController)
         {
             _attackTrigger = attackTrigger;
-            _enemy = enemy;
+            _enemyController = enemyController;
         }
 
         public override void Tick()
         {
             if (_attackTrigger.IsTriggered)
             {
-                _enemy.Attack(_attackTrigger.TriggeredValue);
+                _enemyController.EnemyAttakHandler.Attack(_attackTrigger.TriggeredValue);
             }
             else
             {

@@ -14,13 +14,14 @@ namespace Assets.Scripts.Enemy
 
         public EnemyBehaviour CurrentBehaviour => _currentBehaviour;
         
-        public EnemyBehaviourController(PlayerTrigger chaseTrigger, PlayerTrigger attackTrigger, Enemy enemy, EnemyAnimationController enemyAnimationController)
+        public EnemyBehaviourController(PlayerTrigger chaseTrigger, PlayerTrigger attackTrigger, EnemyController enemyController, EnemyAnimationController enemyAnimationController)
         {
             _enemyBehaviours = new Dictionary<Type, EnemyBehaviour>()
             {
-                { typeof(InactionBehaviour), new InactionBehaviour(this, chaseTrigger)},
-                { typeof(ChaseBehaviour), new ChaseBehaviour(this, chaseTrigger, attackTrigger, enemy)},
-                { typeof(AttackBehaviour), new AttackBehaviour(this, attackTrigger, enemy)},
+                //{ typeof(InactionBehaviour), new InactionBehaviour(this, chaseTrigger)},
+                { typeof(PatrollingBehaviour), new PatrollingBehaviour(this, chaseTrigger, enemyController)},
+                { typeof(ChaseBehaviour), new ChaseBehaviour(this, chaseTrigger, attackTrigger, enemyController)},
+                { typeof(AttackBehaviour), new AttackBehaviour(this, attackTrigger, enemyController)},
             };
         }
 
