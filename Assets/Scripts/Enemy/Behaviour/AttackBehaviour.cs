@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Enemy
+﻿using UnityEngine;
+
+namespace Assets.Scripts.Enemy
 {
     public class AttackBehaviour : EnemyBehaviour
     {
@@ -26,6 +28,15 @@
         public override void Exit()
         {
         }
+
+#if UNITY_EDITOR
+        public override void DrawGizmo()
+        {
+            base.DrawGizmo();
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(_enemyController.transform.position, _attackTrigger.TriggeredValue.transform.position);
+        }
+#endif
     }
 
 }

@@ -37,5 +37,10 @@ namespace Assets.Scripts.Enemy
             _currentBehaviour.Tick();
             Debug.Log(_currentBehaviour.GetType());
         }
+
+        public void OnDrawGizmo() 
+        {
+            _currentBehaviour?.DrawGizmo();
+        }
     }
 }

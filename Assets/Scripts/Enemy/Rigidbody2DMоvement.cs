@@ -4,9 +4,11 @@ namespace Assets.Scripts.Enemy
 {
     public class Rigidbody2DMоvement
     {
+        private const float MIN_DISTANCE_POW = 0.001f;
+
         private readonly Rigidbody2D _rb;
         private readonly float _speed;
-        private readonly Vector3[] _movementPoints;
+        private readonly Vector2[] _movementPoints;
 
         private int index = 0;
         Vector3 currentTargetPoint;
@@ -17,35 +19,12 @@ namespace Assets.Scripts.Enemy
             _speed = speed;
         }
         
-        public Rigidbody2DMоvement(Rigidbody2D rb, float speed, Vector3[] movementPoints)
+        public Rigidbody2DMоvement(Rigidbody2D rb, float speed, Vector2[] movementPoints)
         {
             _rb = rb;
             _speed = speed;
             _movementPoints = movementPoints;
         }
-
-        //public void MovementByPoints()
-        //{
-        //    currentTargetPoint = _movementPoints[index];
-
-        //    MoveByDirectionToPoint(currentTargetPoint);
-
-        //    if (_rb.transform.position.x - currentTargetPoint.x < 0.01f && _rb.transform.position.y - currentTargetPoint.y < 0.01f)
-        //    {
-        //        Debug.Log($"{_rb.transform.position.x} {currentTargetPoint.x}  {_rb.transform.position.y} {currentTargetPoint.y}");
-
-        //        index += 1;
-
-        //        if (index == _movementPoints.Length)
-        //        {
-        //            index = 0;
-        //        }
-        //    }
-
-
-        //    Debug.Log($"{_rb.transform.position.x - currentTargetPoint.x < 0.01f && _rb.transform.position.y - currentTargetPoint.y < 0.01f} {index}");
-
-        //}
 
         public void MovementByPoints()
         {
@@ -53,9 +32,15 @@ namespace Assets.Scripts.Enemy
 
             MoveByDirectionToPoint(currentTargetPoint);
 
-            if (_rb.transform.position.x - currentTargetPoint.x < 0.01f && _rb.transform.position.y - currentTargetPoint.y < 0.01f)
+            var distanceInPow = _rb.transform.position.DistancePow(currentTargetPoint);
+            if (distanceInPow < MIN_DISTANCE_POW)
             {
-                index = index == 1 ? 0 : 1;
+                index += 1;
+
+                if (index == _movementPoints.Length)
+                {
+                    index = 0;
+                }
             }
         }
 

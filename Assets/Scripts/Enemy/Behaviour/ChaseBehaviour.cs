@@ -42,13 +42,12 @@ namespace Assets.Scripts.Enemy
             _enemyController.Rigidbody2DMovement.Stop();
         }
 
-        ///???
 #if UNITY_EDITOR
-        void OnDrawGizmos()
+        public override void DrawGizmo()
         {
-            Gizmos.color = Color.white;
+            base.DrawGizmo();
+            Gizmos.color = Color.gray;
             Gizmos.DrawLine(_enemyController.transform.position, _chaseTrigger.TriggeredValue.transform.position);
-            Debug.Log("Gizmos!");
         }
 #endif
     }

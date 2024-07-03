@@ -20,5 +20,7 @@ namespace Assets.Scripts.Enemy
         public abstract void Tick();
 
         public virtual void Exit() { }
+
+        public virtual void DrawGizmo() { }
     }
 }

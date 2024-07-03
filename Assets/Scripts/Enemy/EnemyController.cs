@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Assets.Scripts.Settings;
 
 namespace Assets.Scripts.Enemy
 {
@@ -16,7 +14,7 @@ namespace Assets.Scripts.Enemy
         [Header("Movement")]
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private float _speed;
-        [SerializeField] private Vector3[] _movementPoints;
+        [SerializeField] private Path _path;
         [Header("Attack")]
         [SerializeField] private float _attackDelay;
         [SerializeField] private int _damage;
@@ -34,7 +32,9 @@ namespace Assets.Scripts.Enemy
         {
             CreateEnemyBehaviourController();
             _lifeHandler = new LifeHandler(10);
-            _rigidbody2DMovement = new Rigidbody2DMоvement(_rb, _speed, _movementPoints);
+
+            _path.ToLocal();
+            _rigidbody2DMovement = new Rigidbody2DMоvement(_rb, _speed, _path.LocalMovementPoints);
             _enemyAttakHandler = new EnemyAttakHandler(_attackDelay, _damage);
         }
 
@@ -50,7 +50,6 @@ namespace Assets.Scripts.Enemy
             _enemyBehaviourController.SwitchBehaviour<PatrollingBehaviour>();
         }
 
-
 #if UNITY_EDITOR
         public void OnValidate()
         {
@@ -58,22 +57,14 @@ namespace Assets.Scripts.Enemy
             _attackTrigger.GetComponent<CircleCollider2D>().radius = _attackRadius;
         }
 
-        void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
-            // Draws four lines making a square
-            Gizmos.color = Color.blue;
-            for (int i = 0; i < _movementPoints.Length - 1; i++)
+            if (_enemyBehaviourController != null)
             {
-                Gizmos.DrawLine(_movementPoints[i], _movementPoints[i + 1]);
-
-                if (i  == _movementPoints.Length - 2)
-                {
-                    Gizmos.DrawLine(_movementPoints[i + 1], _movementPoints[0]);
-                }
+                _enemyBehaviourController.OnDrawGizmo();
             }
         }
 #endif
-
     }
 }
 
