@@ -19,18 +19,25 @@ public class PlayerController : MonoBehaviour
     private string _verticallAxis = "Vertical";
 
     private LifeHandler _lifeHandler;
+    private RotationController _rotationController;
 
     private void Awake()
     {
         _lifeHandler = new LifeHandler(20);
+
+        _rotationController = new RotationController(transform);
     }
 
     private void Update()
     {
         var axis = GetAxis();
 
-        Move(axis);
-        Animate(axis);
+        if (axis != Vector3.zero)
+        {
+            Move(axis);
+            _rotationController.Rotate(transform.position + axis);
+            Animate(axis);
+        }
     }
 
     private Vector3 GetAxis()
@@ -41,9 +48,9 @@ public class PlayerController : MonoBehaviour
         return new Vector3(horizontalAxis, verticalAxis);
     }
 
-    private void Move(Vector3 axis) 
+    private void Move(Vector3 inputVector) 
     {
-        _rb.MovePosition(transform.position + axis * (Time.deltaTime * _speed));
+        _rb.MovePosition(transform.position + inputVector * (Time.deltaTime * _speed));
     }
 
     

@@ -11,9 +11,6 @@
 
         public override void Tick()
         {
-
-            //тут прописать движение enemy туда-сюда
-
             if (_chaseTrigger.IsTriggered)
             {
                 _enemyBehaviourController.SwitchBehaviour<ChaseBehaviour>();

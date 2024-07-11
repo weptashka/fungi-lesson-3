@@ -28,7 +28,10 @@ namespace Assets.Scripts.Enemy
             else if (_chaseTrigger.IsTriggered)
             {
                 Debug.Log("CHASE MODE");
-                _enemyController.Rigidbody2DMovement.MoveByDirectionToPoint(_chaseTrigger.TriggeredValue.transform.position);
+                var playerPosition = _chaseTrigger.TriggeredValue.transform.position;
+
+                _enemyController.Rigidbody2DMovement.MoveByDirectionToPoint(playerPosition);
+                _enemyController.RotationController.Rotate(playerPosition);
             }
             else
             {

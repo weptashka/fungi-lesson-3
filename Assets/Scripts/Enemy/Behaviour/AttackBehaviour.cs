@@ -18,6 +18,7 @@ namespace Assets.Scripts.Enemy
             if (_attackTrigger.IsTriggered)
             {
                 _enemyController.EnemyAttakHandler.Attack(_attackTrigger.TriggeredValue);
+                _enemyController.RotationController.Rotate(_attackTrigger.TriggeredValue.transform.position);
             }
             else
             {

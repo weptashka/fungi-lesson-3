@@ -13,6 +13,8 @@ namespace Assets.Scripts.Enemy
         private int index = 0;
         Vector3 currentTargetPoint;
 
+        public Vector3 Direction => _rb.velocity.normalized;
+
         public Rigidbody2DMоvement(Rigidbody2D rb, float speed)
         {
             _rb = rb;

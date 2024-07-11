@@ -13,12 +13,11 @@ namespace Assets.Scripts.Enemy
             _chaseTrigger = chaseTrigger;
             _enemyBehaviourController = enemyBehaviourController;
             _enemyController = enemyController;
-
         }
 
         public override void Tick()
         {
-            if (_chaseTrigger.IsTriggered)
+            if (_chaseTrigger.IsTriggered && _enemyController.CanStartChase(_chaseTrigger.TriggeredValue.transform.position))
             {
                 _enemyBehaviourController.SwitchBehaviour<ChaseBehaviour>();
             }
