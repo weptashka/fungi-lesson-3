@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Enemy
+namespace Assets.Scripts
 {
     public class Path : MonoBehaviour
     {
@@ -19,7 +19,7 @@ namespace Assets.Scripts.Enemy
             }
         }
 
-        public Vector2 GetLocalPoint(int index)
+        private Vector2 GetLocalPoint(int index)
         {
             return new Vector2(_movementPoints[index].x + transform.position.x, _movementPoints[index].y + transform.position.y);
         }
@@ -30,14 +30,29 @@ namespace Assets.Scripts.Enemy
             // Draws four lines making a square
             Gizmos.color = Color.white;
 
+
+            if (_localMovementPoints == null || _localMovementPoints.Length <= 0)
+            {
+                for (int i = 0; i < _movementPoints.Length - 1; i++)
+                {
+                    Gizmos.DrawLine(GetLocalPoint(i), GetLocalPoint(i + 1));
+                    if (i == _movementPoints.Length - 2)
+                    {
+                        Gizmos.DrawLine(GetLocalPoint(i + 1), GetLocalPoint(0));
+                    }
+                }
+                return;
+            }
+
             for (int i = 0; i < _movementPoints.Length - 1; i++)
             {
-                Gizmos.DrawLine(GetLocalPoint(i), GetLocalPoint(i + 1));
+                Gizmos.DrawLine(_localMovementPoints[i], _localMovementPoints[i + 1]);
                 if (i == _movementPoints.Length - 2)
                 {
-                    Gizmos.DrawLine(GetLocalPoint(i + 1), GetLocalPoint(0));
+                    Gizmos.DrawLine(_localMovementPoints[i + 1], _localMovementPoints[0]);
                 }
             }
+
         }
 #endif
     }

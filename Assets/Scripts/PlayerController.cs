@@ -1,4 +1,4 @@
-using Assets.Scripts.Enemy;
+using Assets.Scripts;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour

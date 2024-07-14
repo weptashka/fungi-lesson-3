@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Enemy;
+﻿using Assets.Scripts;
 using UnityEngine;
 
 namespace Assets.Scripts.Settings

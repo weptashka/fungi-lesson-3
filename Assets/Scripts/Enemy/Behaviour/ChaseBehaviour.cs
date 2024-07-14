@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Enemy
+namespace Assets.Scripts
 {
 
     public class ChaseBehaviour : EnemyBehaviour

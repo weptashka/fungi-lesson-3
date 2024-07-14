@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Assets.Scripts.Enemy
+namespace Assets.Scripts
 {
     public class EnemyController : MonoBehaviour
     {
@@ -60,6 +60,31 @@ namespace Assets.Scripts.Enemy
             _enemyBehaviourController.SwitchBehaviour<PatrollingBehaviour>();
         }
 
+        public bool CanStartChase(Vector3 playerPosition)
+        {
+            var direction = (playerPosition - _rb.transform.position).normalized;
+
+            var position = transform.position;
+
+            var angle = Vector3.Angle(transform.right, direction);
+
+            if (angle > _viewAngle)
+            {
+                return false;
+            }
+
+            var raycastHit2D = Physics2D.Raycast(transform.position, direction, _chaseRadius, _layerMask);
+
+            Debug.DrawRay(position, direction);
+
+            if (raycastHit2D)
+            {
+                return raycastHit2D.transform.gameObject.TryGetComponent(out PlayerController playerController);
+            }
+
+            return false;
+        }
+
 #if UNITY_EDITOR
         public void OnValidate()
         {
@@ -75,42 +100,16 @@ namespace Assets.Scripts.Enemy
             }
 
             Gizmos.color = Color.red;
+
             var transform1 = transform;
+            Gizmos.DrawRay(transform1.position, transform1.right * _chaseRadius);
+
+            Gizmos.color = Color.yellow;
 
             var right = Quaternion.AngleAxis(_viewAngle, Vector3.forward) * transform1.right;
             var left = Quaternion.AngleAxis(-_viewAngle, Vector3.forward) * transform1.right;
-            Gizmos.DrawRay(transform1.position, transform1.right * 1000);
-
-            Gizmos.color = Color.yellow;
             Gizmos.DrawRay(transform1.position, right);
             Gizmos.DrawRay(transform1.position, left);
-
-
-        }
-
-        public bool CanStartChase(Vector3 playerPosition)
-        {
-            var direction = (playerPosition - _rb.transform.position).normalized;
-
-            var position = transform.position;
-
-            var angle = Vector3.Angle(transform.right, direction);
-
-            if (angle > _viewAngle)
-            {
-                return false;
-            }
-
-            var raycastHit2D = Physics2D.Raycast(transform.position, direction);
-
-            Debug.DrawRay(position, direction);
-
-            if (raycastHit2D)
-            {
-                return raycastHit2D.transform.gameObject.TryGetComponent(out PlayerController playerController);
-            }
-
-            return false;
         }
 #endif
     }

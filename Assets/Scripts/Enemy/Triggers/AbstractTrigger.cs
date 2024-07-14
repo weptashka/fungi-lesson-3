@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Enemy
+namespace Assets.Scripts
 {
     [RequireComponent(typeof(Collider2D))]
     public abstract class AbstractTrigger<T> : MonoBehaviour
