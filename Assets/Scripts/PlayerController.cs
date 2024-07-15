@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,12 +9,19 @@ public class PlayerController : MonoBehaviour
         public static int IsWalk = Animator.StringToHash("IsWalk");
         public static int Death = Animator.StringToHash("Death");
     }
+    
+    private class CinemachineKeys
+    {
+        public static int IsMapView = Animator.StringToHash("IsMapView");
+    }
 
     [Header("Animator")]
     [SerializeField] private Animator _animator;
     [Header("Movement Control")]
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private float _speed;
+    [Header("Cinemachine")]
+    [SerializeField] private Animator _cinemachineAnimator;
 
     private string _horizontalAxis = "Horizontal";
     private string _verticallAxis = "Vertical";
@@ -38,6 +46,13 @@ public class PlayerController : MonoBehaviour
             _rotationController.Rotate(transform.position + axis);
             Animate(axis);
         }
+
+        SwapView(Input.GetKey(KeyCode.Tab));
+    }
+
+    private void SwapView(bool isMapView)
+    {
+        _cinemachineAnimator.SetBool(CinemachineKeys.IsMapView, isMapView);
     }
 
     private Vector3 GetAxis()
