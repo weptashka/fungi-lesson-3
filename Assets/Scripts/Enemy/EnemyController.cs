@@ -24,9 +24,10 @@ namespace Assets.Scripts
         [SerializeField] private LayerMask _layerMask;
         [Space]
         [SerializeField] private float _viewAngle;
+        [Space]
+        [SerializeField] private LifeHandler _lifeHandler;
 
         private EnemyBehaviourController _enemyBehaviourController;
-        private LifeHandler _lifeHandler;
         private Rigidbody2DMоvement _rigidbody2DMovement;
         private EnemyAttakHandler _enemyAttakHandler;
         private RotationController _rotationController;
@@ -38,8 +39,6 @@ namespace Assets.Scripts
 
         private void Awake()
         {
-            _lifeHandler = new LifeHandler(10);
-
             _path.ToLocal();
             _rigidbody2DMovement = new Rigidbody2DMоvement(_rb, _speed, _path.LocalMovementPoints);
             _enemyAttakHandler = new EnemyAttakHandler(_attackDelay, _damage);

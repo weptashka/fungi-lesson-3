@@ -15,13 +15,15 @@ namespace Assets.Scripts
             _damage = damage;
         }
 
-        public void Attack(PlayerController player)
+        public void Attack(PlayerController playerController)
         {
             if (Time.time - _lastAttackTime > _attackDelay)
             {
-                _lastAttackTime = Time.time;
+                playerController.TakeDamage(_damage);
 
-                Debug.Log("ENEMY ATTACK");
+                Debug.Log("ATTACK");
+
+                _lastAttackTime = Time.time;
             }
         }
     }

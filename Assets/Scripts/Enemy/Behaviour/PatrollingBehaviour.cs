@@ -17,7 +17,8 @@ namespace Assets.Scripts
 
         public override void Tick()
         {
-            if (_chaseTrigger.IsTriggered && _enemyController.CanStartChase(_chaseTrigger.TriggeredValue.transform.position))
+            if (_chaseTrigger.IsTriggered && _enemyController.CanStartChase(_chaseTrigger.TriggeredValue.transform.position)
+                                          && !_chaseTrigger.TriggeredValue.IsDied)
             {
                 _enemyBehaviourController.SwitchBehaviour<ChaseBehaviour>();
             }

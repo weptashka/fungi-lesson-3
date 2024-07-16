@@ -17,6 +17,11 @@ namespace Assets.Scripts
         {
             if (_attackTrigger.IsTriggered)
             {
+                if (_attackTrigger.TriggeredValue.IsDied)
+                {
+                    _enemyBehaviourController.SwitchBehaviour<PatrollingBehaviour>();
+                }
+
                 _enemyController.EnemyAttakHandler.Attack(_attackTrigger.TriggeredValue);
                 _enemyController.RotationController.Rotate(_attackTrigger.TriggeredValue.transform.position);
             }
