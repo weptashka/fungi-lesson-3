@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -26,6 +27,15 @@ namespace Assets.Scripts
         [Space]
         [SerializeField] private LifeHandler _lifeHandler;
         [SerializeField] private AbstractDamageEffector[] _abstractDamageEffector;
+        [Header("Weapon")]
+        [SerializeField] private WeaponView _pistolView;
+        [SerializeField] private BulletFactory _bulletFactory;
+
+        [SerializeField] private Transform _weaponTransform;
+        private Camera _mainCamera;
+
+        private IWeapon _weapon;
+
         private string _horizontalAxis = "Horizontal";
         private string _verticallAxis = "Vertical";
 
@@ -36,6 +46,7 @@ namespace Assets.Scripts
         private void Awake()
         {
             _rotationController = new RotationController(transform);
+            _weapon = new Pistol(_bulletFactory, _pistolView);
         }
 
         private void Start()
@@ -56,7 +67,7 @@ namespace Assets.Scripts
             }
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             var axis = GetAxis();
 
@@ -68,6 +79,30 @@ namespace Assets.Scripts
             }
 
             SwapView(Input.GetKey(KeyCode.Tab));
+
+
+            RotateWeapon();
+            TryFire();
+        }
+
+        private void RotateWeapon()
+        {
+            var mousePos = Input.mousePosition;
+            mousePos.z = _mainCamera.nearClipPlane;
+            var worldPosition = _mainCamera.ScreenToWorldPoint(mousePos);
+
+            var position = new Vector3(worldPosition.x, worldPosition.y);
+            Quaternion.LookRotation(transform.position, position);
+
+            _weaponTransform.LookAt(position, -transform.forward);
+        }
+
+        private void TryFire()
+        {
+            if (Input.GetMouseButton(0))
+            {
+                _weapon.Fire();
+            }
         }
 
         private void SwapView(bool isMapView)
